@@ -1,0 +1,140 @@
+package codeforces;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Vector;
+
+public class problem230A {
+
+    static class Dragon{
+        int str;
+        int bonus;
+        Dragon(int s,int b){
+            this.str =s;
+            this.bonus = b;
+        }
+    }
+
+    static class Comp implements Comparator<Dragon>{
+        @Override
+        public int compare(Dragon d1,Dragon d2){
+            return Integer.compare(d1.str,d2.str);
+        }
+
+    }
+    private static class FastScanner {
+        final private int BUFFER_SIZE = 1 << 16;
+        private DataInputStream din;
+        private byte[] buffer;
+        private int bufferPointer, bytesRead;
+
+        private FastScanner() {
+            din = new DataInputStream(System.in);
+            buffer = new byte[BUFFER_SIZE];
+            bufferPointer = bytesRead = 0;
+        }
+
+        private short nextShort() throws IOException {
+            short ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = (short) (ret * 10 + c - '0');
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return (short) -ret;
+            return ret;
+        }
+
+        private int nextInt() throws IOException {
+            int ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        public long nextLong() throws IOException {
+            long ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        private char nextChar() throws IOException {
+            byte c = read();
+            while (c <= ' ') c = read();
+            return (char) c;
+        }
+
+        private String nextString() throws IOException {
+            StringBuilder ret = new StringBuilder();
+            byte c = read();
+            while (c <= ' ') c = read();
+            do {
+                ret.append((char) c);
+            } while ((c = read()) > ' ');
+            return ret.toString();
+        }
+
+        private void fillBuffer() throws IOException {
+            bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE);
+            if (bytesRead == -1) buffer[0] = -1;
+        }
+
+        private byte read() throws IOException {
+            if (bufferPointer == bytesRead) fillBuffer();
+            return buffer[bufferPointer++];
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        FastScanner in = new FastScanner();
+        PrintWriter out = new PrintWriter(System.out);
+        //int testcases = in.nextInt();
+        int testcases = 1;
+        while (testcases -- >0){
+            int s = in.nextInt();
+           // out.println(s);
+            int n = in.nextInt();
+           // out.println(n);
+            long pow =s;
+            int[][] arr = new int[n+1][2];
+            for(int i =1;i<=n;i++){
+                arr[i][0] = in.nextInt();
+                arr[i][1] = in.nextInt();
+
+
+            }
+            PriorityQueue<Dragon> pq = new PriorityQueue<>(new Comp());
+            for(int i = 1;i<n+1;i++){
+               // out.println(arr[i][0] + " "+arr[i][1]);
+                pq.add(new Dragon(arr[i][0],arr[i][1]));
+            }
+            String ans ="YES";
+            while(!pq.isEmpty()){
+                Dragon d = pq.poll();
+                if(d.str>=pow){
+                    ans = "NO";
+                    break;
+                }
+                pow+=d.bonus;
+            }
+            out.println(ans);
+
+        }
+        out.flush();
+    }
+}

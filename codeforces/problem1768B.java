@@ -1,0 +1,148 @@
+package codeforces;
+
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
+
+public class problem1768B {
+    private static class FastScanner {
+        final private int BUFFER_SIZE = 1 << 16;
+        private DataInputStream din;
+        private byte[] buffer;
+        private int bufferPointer, bytesRead;
+
+        private FastScanner() {
+            din = new DataInputStream(System.in);
+            buffer = new byte[BUFFER_SIZE];
+            bufferPointer = bytesRead = 0;
+        }
+
+        private short nextShort() throws IOException {
+            short ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = (short) (ret * 10 + c - '0');
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return (short) -ret;
+            return ret;
+        }
+
+        private int nextInt() throws IOException {
+            int ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        public long nextLong() throws IOException {
+            long ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        private char nextChar() throws IOException {
+            byte c = read();
+            while (c <= ' ') c = read();
+            return (char) c;
+        }
+
+        private String nextString() throws IOException {
+            StringBuilder ret = new StringBuilder();
+            byte c = read();
+            while (c <= ' ') c = read();
+            do {
+                ret.append((char) c);
+            } while ((c = read()) > ' ');
+            return ret.toString();
+        }
+
+        private void fillBuffer() throws IOException {
+            bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE);
+            if (bytesRead == -1) buffer[0] = -1;
+        }
+
+        private byte read() throws IOException {
+            if (bufferPointer == bytesRead) fillBuffer();
+            return buffer[bufferPointer++];
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        FastScanner in = new FastScanner();
+        PrintWriter out = new PrintWriter(System.out);
+        int testcases = in.nextInt();
+        while (testcases -- >0){
+            int n = in.nextInt();
+            int k = in.nextInt();
+
+            HashMap<Integer,Integer> hash = new HashMap<>(n);
+            for(int i = 0;i<n;i++){
+
+                hash.put(in.nextInt(),i);
+
+            }
+            int test;
+            for(test =1 ;test<n;test++){
+                if(hash.get(test)>hash.get(test+1)){
+                    break;
+                }
+            }
+            int wrong = n-test;
+            int count = 0;
+            if(wrong ==0)System.out.println(0);
+            else{
+                do{
+                    count++;
+                    wrong = wrong - k;
+                }while (wrong>0);
+
+                System.out.println(count);
+            }
+
+           /* while(true){
+                if(Arrays.equals(arr,arrsorted)){
+                    out.println(count);
+                    break;
+                }
+
+                for(int i = 0;i<k;i++){
+                    elem = elem-1;
+                    if(elem>0) {
+                        int l = 0;
+                        for (l = 0; l < n; l++) {
+                            if (arr[l] == elem) break;
+                        }
+
+                        int m=l;
+                        while(m<elem -1){
+                            arr[m] = arr[m+1];
+                            m++;
+                        }
+                        arr[elem - 1] = elem;
+                    }else {
+                        break;
+                    }
+                }
+                count++;
+            }*/
+
+
+        }out.flush();
+
+    }
+}
